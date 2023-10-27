@@ -118,71 +118,67 @@ class Test extends Component {
     const { currentTest } = this.state;
 
     return (
-      <div>
+      <div className="container">
         {currentTest ? (
-          <div className="edit-form">
-            <h4>Test</h4>
-            <form>
-              <div className="form-group">
-                <label htmlFor="title">Title</label>
-                <input
-                  type="text"
-                  className="form-control"
-                  id="title"
-                  value={currentTest.title}
-                  onChange={this.onChangeTitle}
-                />
-              </div>
-              <div className="form-group">
-                <label htmlFor="description">Description</label>
-                <input
-                  type="text"
-                  className="form-control"
-                  id="description"
-                  value={currentTest.description}
-                  onChange={this.onChangeDescription}
-                />
-              </div>
-
-              <div className="form-group">
-                <label>
-                  <strong>Status:</strong>
-                </label>
-                {currentTest.published ? "Published" : "Pending"}
-              </div>
-            </form>
-
-            {currentTest.published ? (
+          <div className="card">
+            <div className="card-body">
+              <h4 className="card-title">Test</h4>
+              <form>
+                <div className="form-group">
+                  <label htmlFor="title">Title</label>
+                  <input
+                    type="text"
+                    className="form-control"
+                    id="title"
+                    value={currentTest.title}
+                    onChange={this.onChangeTitle}
+                  />
+                </div>
+                <div className="form-group">
+                  <label htmlFor="description">Description</label>
+                  <input
+                    type="text"
+                    className="form-control"
+                    id="description"
+                    value={currentTest.description}
+                    onChange={this.onChangeDescription}
+                  />
+                </div>
+                <div className="form-group">
+                  <label><strong>Status:</strong></label>
+                  {currentTest.published ? "Published" : "Pending"}
+                </div>
+              </form>
+              {currentTest.published ? (
+                <button
+                  className="btn btn-warning mr-2"
+                  onClick={() => this.updatePublished(false)}
+                >
+                  UnPublish
+                </button>
+              ) : (
+                <button
+                  className="btn btn-success mr-2"
+                  onClick={() => this.updatePublished(true)}
+                >
+                  Publish
+                </button>
+              )}
               <button
-                className="badge badge-primary mr-2"
-                onClick={() => this.updatePublished(false)}
+                className="btn btn-danger mr-2"
+                onClick={this.deleteTest}
               >
-                UnPublish
+                Delete
               </button>
-            ) : (
               <button
-                className="badge badge-primary mr-2"
-                onClick={() => this.updatePublished(true)}
+                type="submit"
+                className="btn btn-primary"
+                onClick={this.updateTest}
               >
-                Publish
+                Update
               </button>
-            )}
-
-            <button
-              className="badge badge-danger mr-2"
-              onClick={this.deleteTest}
-            >
-              Delete
-            </button>
-
-            <button
-              type="submit"
-              className="badge badge-success"
-              onClick={this.updateTest}
-            >
-              Update
-            </button>
-            <p>{this.state.message}</p>
+              <p className="mt-3">{this.state.message}</p>
+            </div>
           </div>
         ) : (
           <div>
