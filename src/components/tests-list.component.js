@@ -92,17 +92,23 @@ export default class TestsList extends Component {
   render() {
     const { searchTitle, tests, currentTest, currentIndex } = this.state;
 
+    const filteredTests = tests.filter(test => {
+      return test.title.toLowerCase().includes(searchTitle.toLowerCase());
+    });
+
     return (
-      <div className="list row">
-        <div className="col-md-8">
-          <div className="input-group mb-3">
-            <input
-              type="text"
-              className="form-control"
-              placeholder="Search by title"
-              value={searchTitle}
-              onChange={this.onChangeSearchTitle}
-            />
+      <div className="container">
+        <div className="row">
+          <div className="col-md-12">
+            <div className="text-left">
+              <div className="input-group mb-3">
+              <input
+                type="text"
+                className="form-control"
+                placeholder="Search by title"
+                value={searchTitle}
+                onChange={this.onChangeSearchTitle}
+              />
             <div className="input-group-append">
               <button
                 className="btn btn-outline-secondary"
@@ -110,37 +116,46 @@ export default class TestsList extends Component {
                 onClick={this.searchTitle}
               >
                 Search
-              </button>
+                </button>
+                </div>
+              </div>
             </div>
           </div>
         </div>
-        <div className="col-md-6">
-          <h4> Test Jobs List</h4>
+        <div className="row">
+        <div className="col-md-6 offset-md-3">
+            <h4 className="text-center">Test Jobs List</h4>
 
+          {filteredTests.length > 0 ? (
           <ul className="list-group">
-            {tests &&
-              tests.map((test, index) => (
-                <li
-                  className={
-                    "list-group-item " +
-                    (index === currentIndex ? "active" : "")
-                  }
-                  onClick={() => this.setActiveTest(test, index)}
-                  key={index}
-                >
-                  {test.title}
-                </li>
-              ))}
+            {filteredTests.map((test, index) => (
+              <li
+                className={
+                  "list-group-item " +
+                  (index === currentIndex ? "active" : "")
+                }
+                onClick={() => this.setActiveTest(test, index)}
+                key={index}
+              >
+                {test.title}
+              </li>
+            ))}
           </ul>
+        ) : (
+          <p className="text-center">No items found</p>
+          )}
+
 
           <button
             className="m-3 btn btn-sm btn-danger"
             onClick={this.removeAllTests}
           >
-            Remove All
-          </button>
+                 Remove All
+            </button>
+          </div>
         </div>
-        <div className="col-md-6">
+        <div className="row">
+          <div className="col-md-6 offset-md-3">
           {currentTest ? (
             <div>
               <h4>Test</h4>
@@ -177,6 +192,7 @@ export default class TestsList extends Component {
             </div>
           )}
         </div>
+      </div>
       </div>
     );
   }
